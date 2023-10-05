@@ -20,6 +20,7 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable no-inline-comments */
 /* eslint-disable no-inline-comments */
+import {useDropzone} from 'react-dropzone'
 
 import { useCallback,  useState,useEffect } from 'react';
 import Head from 'next/head';
@@ -48,16 +49,23 @@ const Programs = () => {
 const {Moralis}=useMoralis()
 
 
+const [values, setValues] = useState({
+  programName:"",
+  programDescription: '',
+});
   const handleCellClick = useCallback(
     async (event) => {
-    
+      setImageLoading(true)
+
           const query = new Moralis.Query("Descargables");
           query.equalTo("uid",event.id)
   
           let res=await query.first()
+          console.log(JSON.stringify(res))
           setAvatar(res.attributes.pdfDescargable)
       setValues({programName:res.attributes.descargaName,programDescription:res.attributes.descargaDescription})  
-  
+      setImageLoading(false)
+
     },
     []
   );
@@ -96,13 +104,12 @@ const {Moralis}=useMoralis()
   
   useEffect(()=>{
     fetchData()
-},[change]);
+},[avatar]);
 
 const handleDelete = useCallback(
   (event) => {
     console.log(event)
 
-setRowsToDelete(event)
   },
   []
 );
@@ -122,6 +129,13 @@ var [imageLoading,setImageLoading]=useState(false)
    var [rowsCourse,setRowsCourse]=useState([])
 
 
+
+
+   const {
+    acceptedFiles,
+    getRootProps,
+    getInputProps
+  } = useDropzone(  { accept: '.pdf, .doc, .docx'} );
 
 
   useEffect(()=>{
@@ -242,7 +256,6 @@ avatar?   <a
                >Download .pdf file</Button>
       </a>
            :null  }
-                {error!==""?  <Alert variant="outlined" severity="error">{error}</Alert>:null}
           </Stack>
     
           

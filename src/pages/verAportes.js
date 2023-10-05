@@ -38,12 +38,17 @@ const PdfViewer= dynamic(() => import("./PdfViewer"), {
 });
 
 const Programs = () => {
-
+const [imageLoading,setImageLoading]=useState(false)
 const {Moralis}=useMoralis()
 
+const [values, setValues] = useState({
+  programName:"",
+  programDescription: '',
+});
 
   const handleCellClick = useCallback(
     async (event) => {
+      setImageLoading(true)
       console.log(JSON.stringify(event))  
           console.log(JSON.stringify(event.id))
     
@@ -52,9 +57,10 @@ const {Moralis}=useMoralis()
   
           let res=await query.first()
           console.log(JSON.stringify(res))
-          setAvatar(res.attributes.pdfAporte)
+          setAvatar(res.attributes.pdfDescargable)
       setValues({programName:res.attributes.descargaName,programDescription:res.attributes.descargaDescription})  
-  
+      setImageLoading(false)
+
     },
     []
   );
@@ -91,12 +97,11 @@ const {Moralis}=useMoralis()
   
   useEffect(()=>{
     fetchData()
-},[change]);
+},[]);
 
 const handleDelete = useCallback(
   (event) => {
 
-setRowsToDelete(event)
   },
   []
 );
@@ -159,7 +164,6 @@ var [avatar,setAvatar]=useState()
      </Box>
    </CardContent>
    </div>}
-                {error!==""?  <Alert variant="outlined" severity="error">{error}</Alert>:null}
           </Stack>
     
           
