@@ -1,4 +1,4 @@
-export  const createShadows = () => {
+export const createShadows = () => {
   return [
     'none',
     '0px 1px 2px rgba(0, 0, 0, 0.08)',
