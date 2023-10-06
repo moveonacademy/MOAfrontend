@@ -100,7 +100,8 @@ try{
 
 
    
-    
+  let user=await Moralis.User.current()
+
     query.equalTo("uid",stateID)
     let res=await query.first()
     if(res){
@@ -273,9 +274,7 @@ try{
     if(values.unityLevel===""){
       
       course.set("unityLevel","Kids") 
-      unityLVL="Kids"
     }else {
-      unityLVL=values.unityLevel
 
       course.set("unityLevel",values.unityLevel) 
 
@@ -328,8 +327,8 @@ setError('')
 setLoading(false)
 
 
-  }catch{
-    setError('Error')
+  }catch (e){
+    setError('Error '+e.message)
     setLoading(false)
 
 
