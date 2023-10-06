@@ -503,10 +503,7 @@ const Page = () => {
                 checkboxSelection
                 onCellDoubleClick={handleCellClick}
               />
-              {user?.get("email")==="sistemamoa2023@gmail.com"?   <Button onClick={handleErase} variant="contained">
-              - Borrar
-            </Button>:null
-           }
+             
             
             </div>
           </Stack>

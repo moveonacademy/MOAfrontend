@@ -175,6 +175,7 @@ async function handleCourse(){
 
     query.equalTo("uid",stateID)
     let res=await query.first()
+    let user=await Moralis.User.current()
 
     
     if(res){
@@ -282,7 +283,7 @@ async function handleCourse(){
     }
  
       
-    if(!userMetadata){
+    if(!user){
       setLoading(false)
 
       setError("Falta el usuario")
@@ -342,12 +343,10 @@ const metadata = await client.store({
 
     }
     if(values.courseLevel===""){
-      lvl="Apresto"
       course.set("courseLevel","Apresto")        
 
     }else{ 
       course.set("courseLevel",values.courseLevel)        
-      lvl=values.courseLevel
 
     }
    

@@ -95,6 +95,7 @@ const columnsCourse = [
   { field: 'studentCourse', headerName: 'studentCourse', width: 200 },
 
 ];
+const [courses,setCourses]=useState()
   const fetchData = async () =>{
 
     try{
@@ -261,7 +262,7 @@ async function handleStudent(){
 
 
 
-    if(userMetadata){
+    if(user){
 
       student.set("supportEmail",user.get("email"))   
     
