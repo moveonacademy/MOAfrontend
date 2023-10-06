@@ -35,7 +35,7 @@ const Page = () => {
   
 
 
-const {Moralis,user}=useMoralis()
+const {Moralis}=useMoralis()
 const grados=[
   {
     value: 'Apresto',
@@ -103,6 +103,7 @@ const columnsCourse = [
   const query2 = new Moralis.Query("CoursesMoveOn");
  
   const cursos = await query2.find();
+  let user=await Moralis.User.current()
 
     const query = new Moralis.Query("StudentsMoveOn");
     query.equalTo("supportEmail",user.get("email"))
@@ -183,6 +184,7 @@ async function handleStudent(){
     
     setLoading(true)
 
+    let user=await Moralis.User.current()
 
   const Student= Moralis.Object.extend("StudentsMoveOn")
   const student= new Student()
@@ -257,7 +259,7 @@ async function handleStudent(){
    return 
  }
 
-    
+
 
     if(userMetadata){
 
