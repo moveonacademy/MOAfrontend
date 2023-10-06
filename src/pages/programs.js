@@ -83,7 +83,7 @@ const Container2 = styled.div`
 const Programs = () => {
   const client = new NFTStorage({ token: NFT_STORAGE_TOKEN })
 
-const {Moralis,user}=useMoralis()
+const {Moralis}=useMoralis()
   const [change, setChange] = useState(false);
   const [isLoading,setLoading]= useState(false)
 
@@ -110,7 +110,8 @@ const {Moralis,user}=useMoralis()
   const fetchData = async () =>{
 
     try{
-         
+      let user=await Moralis.User.current()
+
   
       const query2 = new Moralis.Query("Unities");
       const query = new Moralis.Query("Programs");
@@ -171,6 +172,7 @@ var [imageLoading,setImageLoading]=useState(false)
 async function handleProgram(){
   setLoading(true)
   const Courses=Moralis.Object.extend("Programs")
+  let user=await Moralis.User.current()
 
    const course=new Courses()
 
