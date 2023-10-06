@@ -47,7 +47,7 @@ const NFT_STORAGE_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6
 const Page = () => {
   const client = new NFTStorage({ token: NFT_STORAGE_TOKEN })
 
-const {Moralis,user}=useMoralis()
+const {Moralis}=useMoralis()
   const [date, setDate] = useState(null);
   const [count, setCount] = useState(0);
   const [teachers,setTeachers]=useState([])
@@ -61,7 +61,8 @@ const {Moralis,user}=useMoralis()
 
     try{
       
-  
+      let user=await Moralis.User.current()
+
 
     const query2 = new Moralis.Query("TeachersMoveOn");
     await  query2.equalTo("supportEmail",user.get("email"))
@@ -89,7 +90,8 @@ setTeachers([...studiantes])
       
       const query2 = new Moralis.Query("Programs");
       const query = new Moralis.Query("CoursesMoveOn");
-      
+      let user=await Moralis.User.current()
+
   
 
     query.equalTo("supportEmail",user.get("email"))
