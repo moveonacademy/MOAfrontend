@@ -61,9 +61,7 @@ const Page = () => {
 
   const fetchData = async () => {
     try {
-      const magic = new Magic("pk_live_8AC0D79F7D7C0E78", {
-        extensions: [new OAuthExtension()],
-      });
+      
   
       const query2 = new Moralis.Query("Teachers");
       await query2.equalTo("supportEmail", user.get("email"));
@@ -136,9 +134,7 @@ const Page = () => {
 
       const Student = Moralis.Object.extend("Teachers");
       const student = new Student();
-      const magic = new Magic("pk_live_8AC0D79F7D7C0E78", {
-        extensions: [new OAuthExtension()],
-      });
+      
       const query = new Moralis.Query("Teachers");
         query.equalTo("uid", stateID);
       let res = await query.first();

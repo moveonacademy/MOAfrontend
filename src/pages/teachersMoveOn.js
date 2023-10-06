@@ -27,7 +27,6 @@ import Save from "@mui/icons-material/Save";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { DataGrid } from "@mui/x-data-grid";
 
-import { Magic } from "magic-sdk";
 import { TextField,Box,Container ,Typography,Button,Stack} from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -44,7 +43,7 @@ const top100Films = [
 ];
 const Page = () => {
   const [change, setChange] = useState(false);
-  const { Moralis,user } = useMoralis();
+  const { Moralis } = useMoralis();
 
   const columnsCourse = [
     { field: "id", headerName: "id", width: 70 },
@@ -57,10 +56,9 @@ const Page = () => {
 
   const fetchData = async () => {
     try {
-      const magic = new Magic("pk_live_8AC0D79F7D7C0E78", {
-        extensions: [new OAuthExtension()],
-      });
-  
+      
+      let user=await Moralis.User.current()
+
       const query2 = new Moralis.Query("TeachersMoveOn");
       await query2.equalTo("supportEmail", user.get("email"));
 
@@ -128,12 +126,11 @@ const Page = () => {
 
       const Student = Moralis.Object.extend("TeachersMoveOn");
       const student = new Student();
-      const magic = new Magic("pk_live_8AC0D79F7D7C0E78", {
-        extensions: [new OAuthExtension()],
-      });
+      
       const query = new Moralis.Query("TeachersMoveOn");
         query.equalTo("uid", stateID);
       let res = await query.first();
+      let user=await Moralis.User.current()
 
       if (res) {
         res.set("supportEmail", user.get("email"));
