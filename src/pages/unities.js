@@ -55,9 +55,11 @@ const {Moralis,user}=useMoralis()
   );
 
   const fetchData = async () => {
- 
+    let user=await Moralis.User.current()
+
       const query = new Moralis.Query("Unities");
-   
+      query.equalTo("supportEmail",user.get("email"))
+
       const object = await query.find();
        let courses=[]
       for(let i=0;i<object.length;i++){
