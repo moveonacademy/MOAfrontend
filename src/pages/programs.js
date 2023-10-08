@@ -112,12 +112,11 @@ const {Moralis}=useMoralis()
     try{
       let user=await Moralis.User.current()
 
-  
       const query2 = new Moralis.Query("Unities");
       const query = new Moralis.Query("Programs");
        query2.equalTo("supportEmail",user.get("email"))
        const object2 = await query2.find();
-      query.equalTo("supportEmail",user.get("email"))
+    
       const object = await query.find();
        let courses=[]
      

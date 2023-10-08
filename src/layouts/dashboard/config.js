@@ -108,7 +108,6 @@ export const itemsAdmin = [
       </SvgIcon>
     )
   },
-  
   {
     title: 'Programas de Cursos',
     path: '/programs',
@@ -128,12 +127,31 @@ export const itemsAdmin = [
     )
   },
   
+  
+  {
+    title: 'Programas de Cursos MO',
+    path: '/coursesMoveOnAdmin',
+    icon: (
+      <SvgIcon fontSize="small">
+        <UserIcon />
+      </SvgIcon>
+    )
+  },
   {
     title: 'Cursos',
     path: '/courses',
     icon: (
       <SvgIcon fontSize="small">
         <UserIcon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Profesores MO',
+    path: '/teachersMoveOnAdmin',
+    icon: (
+      <SvgIcon fontSize="small">
+        <LockClosedIcon />
       </SvgIcon>
     )
   },
