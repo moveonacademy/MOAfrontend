@@ -828,7 +828,8 @@ const [programs, setPrograms] = useState([...fixedOptions]);
   getOptionLabel={(option) => option.label}
   renderTags={(tagValue, getTagProps) =>
     tagValue.map((option, index) => (
-      <Chip
+      <Chip 
+      key={index}
         label={option.label}
         {...getTagProps({ index })}
         disabled={fixedOptions.indexOf(option) !== -1}
