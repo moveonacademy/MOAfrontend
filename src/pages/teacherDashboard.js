@@ -122,6 +122,9 @@ const {Moralis,user}=useMoralis()
        const object4 = await query4.find();
 
       const query2 = new Moralis.Query("Unities");
+      if(!object3){
+return 
+      }
       query2.equalTo("supportEmail",object3.attributes.supportEmail)
      
 
