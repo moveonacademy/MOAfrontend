@@ -466,6 +466,7 @@ export const itemsSupport = [
     )
   },
 ];
+
 export const itemsMoveOnSchool = [
  
   
@@ -523,7 +524,48 @@ export const itemsMoveOnSchool = [
 ];
 
 
-export const itemsRegular = [
+export const itemsTeacherMoveOn = [
  
-  
+    
+    {
+      title: 'Agregar Estudiantes',
+      path: '/studentMoveOn',
+      icon: (
+        <SvgIcon fontSize="small">
+          <UserIcon />
+        </SvgIcon>
+      )
+    },
+    
+    
+    {//debe ver todos los programas asignados por casa matriz en vez de 
+      title: 'Agregar Cursos',
+      path: '/coursesMoveOn',
+      icon: (
+        <SvgIcon fontSize="small">
+          <UserIcon />
+        </SvgIcon>
+      )
+    },
+    
+     
+    {//no descargables
+      title: 'Aportes',
+      path: '/verAportes',
+      icon: (
+        <SvgIcon fontSize="small">
+          <UserIcon />
+        </SvgIcon>
+      )
+    }, 
+      
+    {//si descargables
+      title: 'Descargables',
+      path: '/verDescargables',
+      icon: (
+        <SvgIcon fontSize="small">
+          <UserIcon />
+        </SvgIcon>
+      )
+    }
 ];

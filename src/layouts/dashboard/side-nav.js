@@ -35,7 +35,7 @@ import {
 } from '@mui/material';
 import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
-import { itemsTeacher,itemsRegular,itemsStudent, itemsAfterSchool, itemsMoveOnSchool } from './config';
+import { itemsTeacher,itemsRegular,itemsStudent, itemsAfterSchool, itemsMoveOnSchool, itemsTeacherMoveOn } from './config';
 import { itemsAdmin } from './config';
 import { itemsManagers } from './config';
 
@@ -53,6 +53,8 @@ export const SideNav = (props) => {
  const [isManager,setIsManager]=useState(false)
  const [isAdmin,setIsAdmin]=useState(false)
  const [isTeacher,setIsTeacher]=useState(false)
+ const [isTeacherMoveOn,setIsTeacherMoveOn]=useState(false)
+
  const [isStudent,setIsStudent]=useState(false)
  const [isAfterSchool,setIsAfterSchool]=useState(false)
  const [isMoveOnSchool,setIsMoveOnSchool]=useState(false)
@@ -101,6 +103,21 @@ if(user.get("email")){
     
     setIsStudent(false)
     setIsManager(false)
+    return
+  }
+   
+  const query22 = new Moralis.Query("TeachersMoveOn");
+  await query22.equalTo("teacherEmail",user.get("email"))
+  
+  const teacher22 = await query22.first();
+  console.log("teacher"+JSON.stringify(teacher22))
+  if(teacher22){
+
+    setIsTeacher(false)
+    
+    setIsStudent(false)
+    setIsManager(false)
+    setIsTeacherMoveOn(true)
     return
   }
    
@@ -345,6 +362,20 @@ return
                 />
               );
             }):isRegular?itemsRegular.map((item) => {
+              const active = item.path ? (pathname === item.path) : false;
+
+              return (
+                <SideNavItem
+                  active={active}
+                  disabled={item.disabled}
+                  external={item.external}
+                  icon={item.icon}
+                  key={item.title}
+                  path={item.path}
+                  title={item.title}
+                />
+              );
+            }):isTeacherMoveOn?itemsTeacherMoveOn.map((item) => {
               const active = item.path ? (pathname === item.path) : false;
 
               return (
