@@ -528,8 +528,8 @@ export const itemsTeacherMoveOn = [
  
     
     {
-      title: 'Agregar Estudiantes',
-      path: '/studentMoveOn',
+      title: 'Consultar Programas',
+      path: '/teacherDasboardMoveOn',
       icon: (
         <SvgIcon fontSize="small">
           <UserIcon />
@@ -538,34 +538,4 @@ export const itemsTeacherMoveOn = [
     },
     
     
-    {//debe ver todos los programas asignados por casa matriz en vez de 
-      title: 'Agregar Cursos',
-      path: '/coursesMoveOn',
-      icon: (
-        <SvgIcon fontSize="small">
-          <UserIcon />
-        </SvgIcon>
-      )
-    },
-    
-     
-    {//no descargables
-      title: 'Aportes',
-      path: '/verAportes',
-      icon: (
-        <SvgIcon fontSize="small">
-          <UserIcon />
-        </SvgIcon>
-      )
-    }, 
-      
-    {//si descargables
-      title: 'Descargables',
-      path: '/verDescargables',
-      icon: (
-        <SvgIcon fontSize="small">
-          <UserIcon />
-        </SvgIcon>
-      )
-    }
 ];
