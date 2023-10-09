@@ -88,7 +88,7 @@ const tableIcons = {
 const Programs = () => {
   const client = new NFTStorage({ token: NFT_STORAGE_TOKEN })
 
-const {Moralis,user}=useMoralis()
+const {Moralis}=useMoralis()
   const [change, ] = useState(false);
 
   const [,setStateID]=useState(null)
@@ -111,7 +111,8 @@ const {Moralis,user}=useMoralis()
   const fetchData = async () =>{
 
     try{
-         
+      let user=await Moralis.User.current()
+
   
       const query4 = new Moralis.Query("Courses");
       query4.equalTo("teacherEmail",user.get("email"))
