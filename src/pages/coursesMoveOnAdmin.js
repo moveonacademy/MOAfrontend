@@ -20,6 +20,7 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable no-inline-comments */
 /* eslint-disable no-inline-comments */
+import Autocomplete from '@mui/material/Autocomplete';
 
 import { useCallback,  useState,useEffect ,} from 'react';
 import Head from 'next/head';
@@ -226,6 +227,17 @@ async function handleCourse(){
     for(let i=0;i<rowsDate.length;i++){
       dates=[...dates,rowsDate[i].date]
     }
+    
+    if(value){
+  
+      res.set("programs",value)
+    } else{
+      setLoading(false)
+
+      setError("Falta los programas del curso")
+  
+      return
+    }  
     if(dates.length>0){
   
      
@@ -301,6 +313,16 @@ async function handleCourse(){
       course.set("courseName",values.courseName)    
 
     }
+    
+    if(value){
+  
+      course.set("programs",value)
+    } else{
+      setError("Falta los programas del curso")
+      setLoading(false)
+
+      return
+    }  
      if(values.courseDescription===""){
       setLoading(false)
 
@@ -359,7 +381,8 @@ const metadata = await client.store({
     }else{
       course.set("courseDates",dates)        
 
-    }
+    } 
+    
      let uniqueID=parseInt((Date.now()+ Math.random()).toString())
 
      course.set("uid",uniqueID)
@@ -408,7 +431,7 @@ const handleCellClick = useCallback(
 
 let fixedOptions=[]
 const [value, setValue] = useState([...fixedOptions]);
-const [, setPrograms] = useState([...fixedOptions]);
+const [programs, setPrograms] = useState([...fixedOptions]);
   const [values, setValues] = useState({
     courseName:"",
     courseCity: 'Merida',
@@ -789,7 +812,7 @@ const [, setPrograms] = useState([...fixedOptions]);
 </Grid>
               </div>
               
-        {/*     
+         
 <Autocomplete
   multiple
   id="fixed-tags-demo"
@@ -815,7 +838,7 @@ const [, setPrograms] = useState([...fixedOptions]);
   renderInput={(params) => (
     <TextField {...params} label="Programas" placeholder="Programas" />
   )}
-/> */}
+/> 
 <LoadingButton
                          fullWidth
                          size="large"
