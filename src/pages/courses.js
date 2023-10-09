@@ -67,7 +67,10 @@ const {Moralis,user}=useMoralis()
   
 
     const query2 = new Moralis.Query("Teachers");
-    await  query2.equalTo("supportEmail",user.get("email"))
+    if(user.get("email")!=="sistemamoa2023@gmail.com"){
+      await  query2.equalTo("supportEmail",user.get("email"))
+
+    }
 
       const object = await query2.find();
     let studiantes=[]
