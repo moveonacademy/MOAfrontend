@@ -21,6 +21,7 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable no-inline-comments */
 /* eslint-disable no-inline-comments */
+import { ThemeProvider } from '@mui/styles'
 
 import {   useState,useEffect } from 'react';
 import Head from 'next/head';
@@ -51,12 +52,15 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import {useDropzone} from 'react-dropzone'
 const NFT_STORAGE_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGE3YTEwQTE3MWIzNUUyYThkMTI2NTc0RjIzMDQ0N0U2NTJjMzBhYTkiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY5MDgyMDc2Njg3MCwibmFtZSI6Ik1vdmVPbkFjYWRlbXkifQ.hJgbUMIjnyiHxNa8HLEGl9JLcbyq3qoNj8Fkrj3X-RU'
+import { createTheme } from '@mui/material';
 
 import Alert from '@mui/material/Alert';
 import { NFTStorage } from 'nft.storage'
 
 
 
+const mytheme =  createTheme({
+});
 
 const PdfViewer= dynamic(() => import("./PdfViewer"), {
   ssr: false,
@@ -158,7 +162,9 @@ if(object){
     fetchData()
 },[change]);
 
+var [error,setError]=useState("")
 
+var [imageLoading,setImageLoading]=useState(false)
 
 
   const [values, setValues] = useState({
@@ -211,7 +217,6 @@ if(object){
               image: imageFile
             })
       
-  console.log("metadata.ipnft "+metadata.ipnft)
     await fetch("https://"+metadata.ipnft+".ipfs.dweb.link/metadata.json")
     .then(function (response) {
   
@@ -319,7 +324,8 @@ if(object){
               </Stack>
             </Stack>
             <div style={{ height: 400, width: '100%' }}>
-            
+            <ThemeProvider theme={mytheme}>
+
     <MaterialTable
         title="Programas"
         columns={columnsCourse}
@@ -337,7 +343,9 @@ if(object){
             row?.id === selectedRow?.id ? { background: "#e7e7e7" } : {},
         }}
         
-      />      
+      />     
+             </ThemeProvider>
+  
 
        {/*   <Button
                  

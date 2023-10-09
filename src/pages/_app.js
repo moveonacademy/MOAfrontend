@@ -39,10 +39,10 @@ const App = (props) => {
           content="initial-scale=1, width=device-width"
         />
       </Head>
-     
+      <ThemeProvider theme={theme}>
+
       <LocalizationProvider dateAdapter={AdapterDateFns}>
        
-          <ThemeProvider theme={theme}>
             <CssBaseline />
 
             <AuthProvider>
@@ -56,9 +56,9 @@ const App = (props) => {
         </AuthProvider>
         
 
-          </ThemeProvider>
       </LocalizationProvider>
-      
+      </ThemeProvider>
+
     </CacheProvider>
               </MoralisProvider>
   );
