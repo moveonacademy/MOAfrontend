@@ -113,7 +113,6 @@ const {Moralis}=useMoralis()
 
   const fetchData = async () =>{
 
-    try{
       let user=await Moralis.User.current()
  
   
@@ -139,8 +138,9 @@ console.log(JSON.stringify(object3.attributes.supportEmail))
        let courses=[]
 
 
-      for(let i=1;i<object4.length;i++){
-
+      for(let i=0;i<object4.length;i++){
+        if(object4[i].attributes.programs){
+          
       for(let j=0;j<object4[i].attributes.programs.length;j++){
         const query = new Moralis.Query("Programs");
         query.limit(1000)
@@ -160,14 +160,12 @@ if(object[j].attributes.uid){
 }
             
 }
+
+}
       }
       console.log("supportEmail3 "+JSON.stringify(courses))
       setRowsCourse([...courses])
-    } 
-    
-    catch(err){
-      console.log(err);
-    }
+   
   
   }
   
