@@ -88,12 +88,15 @@ const tableIcons = {
 const Programs = () => {
   const client = new NFTStorage({ token: NFT_STORAGE_TOKEN })
 
+  let fixedOptions=[]
+  const [value, setValue] = useState([...fixedOptions]);
 const {Moralis}=useMoralis()
   const [change, ] = useState(false);
 
   const [,setStateID]=useState(null)
 
   const handleCellClick = async (event, clickedRow) => {
+    
 
     
           const query = new Moralis.Query("Programs");
@@ -118,28 +121,36 @@ const {Moralis}=useMoralis()
       query4.equalTo("teacherEmail",user.get("email"))
 
       const query3 = new Moralis.Query("TeachersMoveOn");
-      query3.equalTo("teacherEmail",user.get("email"))
+query3.equalTo("teacherEmail",user.get("email"))
        const object3 = await query3.first();
        const object4 = await query4.find();
+console.log(JSON.stringify(object4))
+console.log(JSON.stringify(object3.attributes.supportEmail))
 
       const query2 = new Moralis.Query("Unities");
       if(!object3){
-return 
+ 
+      }else{
+        query2.equalTo("supportEmail",object3.attributes.supportEmail)
+
       }
-      query2.equalTo("supportEmail",object3.attributes.supportEmail)
      
 
        let courses=[]
 
 
-      for(let i=0;i<object4.length;i++){
+      for(let i=1;i<object4.length;i++){
 
       for(let j=0;j<object4[i].attributes.programs.length;j++){
         const query = new Moralis.Query("Programs");
+        query.limit(1000)
+        console.log("object4[i].attributes.programs[j].value "+JSON.stringify(object4[i].attributes.programs[j].value))
+
         query.equalTo("uid",object4[i].attributes.programs[j].value)
         const object = await query.find();
+        console.log("object2 "+JSON.stringify(object4[i].attributes.programs[j].value))
 
-if(object){
+if(object[j].attributes.uid){
   courses=[...courses,{
     id:object[j].attributes.uid,
     programName:object[j].attributes.programName,

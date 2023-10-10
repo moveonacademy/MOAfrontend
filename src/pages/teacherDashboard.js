@@ -93,6 +93,8 @@ const {Moralis}=useMoralis()
 
   const [,setStateID]=useState(null)
 
+  let fixedOptions=[]
+  const [value, setValue] = useState([...fixedOptions]);
   const handleCellClick = async (event, clickedRow) => {
 
     
