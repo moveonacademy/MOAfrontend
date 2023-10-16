@@ -22,6 +22,7 @@
 /* eslint-disable no-inline-comments */
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import dynamic from 'next/dynamic';
+import axios from 'axios';
 
 import { useCallback,  useState,useEffect } from 'react';
 import Head from 'next/head';
@@ -369,74 +370,75 @@ const [levels, setLevels] = useState([]);
     getInputProps,
     getRootProps,
   } = useDropzone(  { accept: '.pdf, .doc, .docx'} );
-
-
-  useEffect(()=>{
-    var imageFile=""
-    try{
-      
-    if(acceptedFiles.length>0){
-      setImageLoading(true)
-        let image=""
-        let description=""
-        let name=""
-
-      acceptedFiles.forEach(async (file) => {
-        const reader = new FileReader()
-        
-        reader.onabort = () =>  setImageLoading(false)
+  useEffect(() => {
+    try {
+      if (acceptedFiles.length > 0) {
+        setImageLoading(true);
   
-        reader.onerror = () =>  setImageLoading(false)
+        const uploadPromises = acceptedFiles.map(async (file) => {
+          const reader = new FileReader();
   
-        reader.onload = async () => {
-        // Do whatever you want with the file contents
-          const binaryStr = reader.result
-           imageFile = await new File([ binaryStr ], 'pdfPrograma.pdf', { type: 'pdf' })
+          return new Promise(async (resolve, reject) => {
+            reader.onabort = () => {
+              reject("File reading aborted");
+            };
   
-           if(imageFile){
-        
-            const metadata = await client.store({
-              name: "programa",
-              description: "programa",
-              image: imageFile
-            })
-
-  console.log("metadata.ipnft "+metadata.ipnft)
-  let i=0
-  while(i==0){
-    
-    await fetch("https://"+metadata.ipnft+".ipfs.dweb.link/metadata.json")
-    .then(function (response) {
+            reader.onerror = () => {
+              reject("An error occurred while reading the file");
+            };
   
-      return response.json();
-    }).then(function (data) {
-      name="programa"
-      description = "programa"
-      image = data.image
-    })
-    
-  let newimage = image.replace("ipfs://", "https://")
-  let final=newimage.replace( "/pdfPrograma.pdf",".ipfs.dweb.link/pdfPrograma.pdf")
-  setAvatar(final)
-  setImageLoading(false)
-  console.log("termino")
-     i=1          
-  } }
-          
-        }
+            reader.onload = async () => {
+              const binaryStr = reader.result;
+              const imageFile = new File([binaryStr], "pdfPrograma.pdf", { type: "pdf" });
   
-        reader.readAsArrayBuffer(file)
-      })
-      
+              if (imageFile) {
+                try {
+                  const metadata = await client.store({
+                    name: "programa",
+                    description: "programa",
+                    image: imageFile,
+                  });
   
-    
+                  console.log("metadata.ipnft " + metadata.ipnft);
+  
+                  const response = await axios.get(`https://${metadata.ipnft}.ipfs.dweb.link/metadata.json`);
+                  const data = response.data;
+  
+                  console.log("data " + data);
+  
+                  const description = "capture pago";
+                  const image = data.image;
+  
+                  const newimage = image.replace("ipfs://", "https://");
+                  const final = newimage.replace("/pdfPrograma.pdf", ".ipfs.dweb.link/pdfPrograma.pdf");
+                 
+                  setAvatar(final);
+                  resolve(final);
+                } catch (error) {
+                  reject(error);
+                }
+              }
+            };
+  
+            reader.readAsArrayBuffer(file);
+          });
+        });
+  
+        Promise.all(uploadPromises)
+          .then((finalUrls) => {
+            // Do something with the finalUrls if needed
+            setImageLoading(false);
+          })
+          .catch((error) => {
+            console.error("An error occurred:", error);
+            setImageLoading(false);
+          });
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      setImageLoading(false);
     }
-
-  }catch{
-    setImageLoading(false)
-
-  }
-    },[acceptedFiles])
+  }, [acceptedFiles]);
   return (
     <>
       <Head>
