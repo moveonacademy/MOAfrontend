@@ -2,7 +2,6 @@ import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import {  useState,} from 'react';
-
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
@@ -21,12 +20,13 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     setNumPages(numPages);
   }
   return (
+    
     <div>
     <Document file={props.avatar} onLoadSuccess={onDocumentLoadSuccess}>
-      <Page pageNumber={pageNumber} />
+      <Page pageNumber={pageNumber}renderTextLayer={false} renderAnnotationLayer={false} />
     </Document>
     <Stack spacing={2}>
-      <Pagination count={numPaginas} page={pageNumber} onChange={handleChange} />
+      <Pagination  count={numPaginas} page={pageNumber} onChange={handleChange} />
     </Stack>
    
   </div>

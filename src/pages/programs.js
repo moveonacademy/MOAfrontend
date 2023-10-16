@@ -28,6 +28,7 @@ import Head from 'next/head';
 import Save from '@mui/icons-material/Save';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
 
 const PdfViewer= dynamic(() => import("./PdfViewer"), {
 });
@@ -401,6 +402,9 @@ const [levels, setLevels] = useState([]);
             })
 
   console.log("metadata.ipnft "+metadata.ipnft)
+  let i=0
+  while(i==0){
+    
     await fetch("https://"+metadata.ipnft+".ipfs.dweb.link/metadata.json")
     .then(function (response) {
   
@@ -415,8 +419,9 @@ const [levels, setLevels] = useState([]);
   let final=newimage.replace( "/pdfPrograma.pdf",".ipfs.dweb.link/pdfPrograma.pdf")
   setAvatar(final)
   setImageLoading(false)
-  
-                }
+  console.log("termino")
+     i=1          
+  } }
           
         }
   

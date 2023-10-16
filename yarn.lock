@@ -6203,6 +6203,11 @@ react-calendly@^4.1.1:
   resolved "https://registry.npmjs.org/react-calendly/-/react-calendly-4.1.1.tgz"
   integrity sha512-NEVYY3BXvDb11jmEh7ttMzXRKHSZA2POxNI64wh9sqXgcwvWzy/pfDGOxfM3UCgCvH1iXyPmdy+qntHDEprh4w==
 
+react-cloudinary-upload-widget@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-cloudinary-upload-widget/-/react-cloudinary-upload-widget-2.0.0.tgz#9f57784c844123a984e87f245e4930d535750145"
+  integrity sha512-q+0qJLUUUnAkbGjrwh2SYHCN466dYYSd9C1pR/qB/epAKD9iqs3qUZoYXVwFGPdfmlnUO9LDk9htN+lfK6xFvA==
+
 react-dom@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
@@ -6266,10 +6271,10 @@ react-native-fetch-api@^3.0.0:
   dependencies:
     p-defer "^3.0.0"
 
-react-pdf@^7.4.0:
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/react-pdf/-/react-pdf-7.4.0.tgz#b8b01dab7a9dece8d99e767baa26cc1219626a8d"
-  integrity sha512-L2GIUc9eBLdb51DRqUe3zlkTmvOq7KQN5cKmgcrWdnWNwhYgrOGgpJQ3f56kG26G+B5GoasAHI6RjQrLfTjTnw==
+react-pdf@^7.5.0:
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/react-pdf/-/react-pdf-7.5.0.tgz#a49d51faf2a68e0bc30d5a8ff5335061bb72a4b1"
+  integrity sha512-hX7SfQGd9T6pdd3H5HcR1VzrRCehkhnBh/tsyz9GO9cXrYHgoxupboVL2VCQpBBSak+/UQSMCj+3JTOdheuwwQ==
   dependencies:
     clsx "^2.0.0"
     make-cancellable-promise "^1.3.1"

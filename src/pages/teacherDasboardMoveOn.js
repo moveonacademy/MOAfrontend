@@ -115,16 +115,15 @@ const {Moralis}=useMoralis()
 
       let user=await Moralis.User.current()
  
-  
       const query4 = new Moralis.Query("CoursesMoveOn");
       query4.equalTo("teacherEmail",user.get("email"))
 
       const query3 = new Moralis.Query("TeachersMoveOn");
-query3.equalTo("teacherEmail",user.get("email"))
+      query3.equalTo("teacherEmail",user.get("email"))
        const object3 = await query3.first();
        const object4 = await query4.find();
-console.log(JSON.stringify(object4))
-console.log(JSON.stringify(object3.attributes.supportEmail))
+      console.log(JSON.stringify(object4))
+      console.log(JSON.stringify(object3.attributes.supportEmail))
 
       const query2 = new Moralis.Query("Unities");
       if(!object3){
