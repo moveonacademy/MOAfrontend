@@ -118,7 +118,7 @@ const {Moralis}=useMoralis()
       const query = new Moralis.Query("Programs");
        query2.equalTo("supportEmail",user.get("email"))
        const object2 = await query2.find();
-    
+    query.limit(1000)
       const object = await query.find();
        let courses=[]
      
