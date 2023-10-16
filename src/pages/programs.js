@@ -400,9 +400,7 @@ const [levels, setLevels] = useState([]);
                   });
   
                   console.log("metadata.ipnft " + metadata.ipnft);
-  
-                  const response = await axios.get(`https://${metadata.ipnft}.ipfs.dweb.link/metadata.json`);
-                  const data = response.data;
+                  const data = await Moralis.Cloud.run("setProgram",{metadata:metadata});
   
                   console.log("data " + data);
   
