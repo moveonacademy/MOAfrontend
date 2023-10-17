@@ -93,9 +93,11 @@ setTeachers([...studiantes])
       const query = new Moralis.Query("CoursesMoveOn");
       let user=await Moralis.User.current()
 
-  
+      query.limit(1000)
+
 
       const object = await query.find();
+      query2.limit(1000)
       const object2 = await query2.find();
 
 

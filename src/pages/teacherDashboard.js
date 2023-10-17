@@ -139,6 +139,7 @@ return
       for(let j=0;j<object4[i].attributes.programs.length;j++){
         const query = new Moralis.Query("Programs");
         query.equalTo("uid",object4[i].attributes.programs[j].value)
+        query.limit(1000)
         const object = await query.find();
 
 if(object){
