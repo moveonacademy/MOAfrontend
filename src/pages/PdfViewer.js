@@ -21,9 +21,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   }
   return (
     
-    <div>
-    <Document file={props.avatar} onLoadSuccess={onDocumentLoadSuccess}>
-      <Page pageNumber={pageNumber}renderTextLayer={false} renderAnnotationLayer={false} />
+    <div style={{height:"100%",width:"100%"}}>
+    <Document style={{height:"100%",width:"100%"}} file={props.avatar} onLoadSuccess={onDocumentLoadSuccess}>
+      <Page style={{height:"100%",width:"100%"}} pageNumber={pageNumber}  />
     </Document>
     <Stack spacing={2}>
       <Pagination  count={numPaginas} page={pageNumber} onChange={handleChange} />

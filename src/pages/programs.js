@@ -561,14 +561,17 @@ const [levels, setLevels] = useState([]);
 
    <CardContent>
      <Box
+     style={{height:"100%",width:"100%"}}
        sx={{
          alignItems: 'flex-start',
          display: 'flex',
+
          flexDirection: 'column'
        }}
      >
       {avatar?
       <div>
+        
           <PdfViewer avatar={avatar}/>
    
     </div>:null}
