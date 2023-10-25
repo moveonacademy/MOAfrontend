@@ -58,8 +58,9 @@ const {Moralis,user}=useMoralis()
     let user=await Moralis.User.current()
 
       const query = new Moralis.Query("Unities");
-      query.equalTo("supportEmail",user.get("email"))
       query.limit(1000)
+
+      query.equalTo("supportEmail",user.get("email"))
 
       const object = await query.find();
        let courses=[]
@@ -640,6 +641,7 @@ setLoading(false)
             <div style={{ height: 400, width: '100%' }}>
               
       <DataGrid
+                      autoPageSize
       onCellDoubleClick={handleCellClick}
         rows={rowsCourse}
         columns={columnsCourse}

@@ -1102,6 +1102,7 @@ const [change, setChange] = useState(false);
       <DataGrid
         rows={rowsStudents}
         columns={columnsCourse}
+        autoPageSize
         onRowSelectionModelChange={handleDelete}
         checkboxSelection
         onCellDoubleClick={handleCellClick}

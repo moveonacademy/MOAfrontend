@@ -882,6 +882,7 @@ const Page = () => {
             <div style={{ height: 400, width: "100%" }}>
               <DataGrid
                 rows={rowsStudents}
+                autoPageSize
                 columns={columnsCourse}
                 onRowSelectionModelChange={handleDelete}
                 checkboxSelection

@@ -627,6 +627,7 @@ const [levels, setLevels] = useState([]);
             onRowSelectionModelChange={handleDelete}
             checkboxSelection
         rows={rowsCourse}
+        autoPageSize
         columns={columnsCourse}
         
       />
