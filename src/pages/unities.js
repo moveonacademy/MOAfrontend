@@ -58,6 +58,7 @@ const {Moralis,user}=useMoralis()
     let user=await Moralis.User.current()
 
       const query = new Moralis.Query("Unities");
+      query.limit(1000)
       query.equalTo("supportEmail",user.get("email"))
 
       const object = await query.find();
@@ -101,7 +102,6 @@ try{
 
    
   let user=await Moralis.User.current()
-
     query.equalTo("uid",stateID)
     let res=await query.first()
     if(res){
