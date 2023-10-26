@@ -9,6 +9,8 @@ import { useNProgress } from 'src/hooks/use-nprogress';
 import { createTheme } from '../theme';
 import { createEmotionCache } from 'src/utils/create-emotion-cache';
 import 'simplebar-react/dist/simplebar.min.css';
+import Script from 'next/script';
+
 
 import "./styles.css";
 import { MoralisProvider } from "react-moralis";
@@ -25,10 +27,7 @@ const App = (props) => {
 
   const theme = createTheme();
 
-  return (    <MoralisProvider
-    serverUrl={process.env.NEXT_PUBLIC_MORALIS_SERVER_URL }
-    appId={process.env.NEXT_PUBLIC_MORALIS_APP_ID }
-  > 
+  return (   
     <CacheProvider value={emotionCache}>
       <Head>
         <title>
@@ -38,7 +37,24 @@ const App = (props) => {
           name="viewport"
           content="initial-scale=1, width=device-width"
         />
+      
       </Head>
+      <Script
+        src="https://cdn.voiceflow.com/widget/bundle.mjs"
+        strategy="lazyOnload"
+        onLoad={() =>
+
+          window.voiceflow.chat.load({
+            verify: { projectID: '653a78d8978fad000708e03e' },
+            url: 'https://general-runtime.voiceflow.com',
+            versionID: 'production'
+          })
+        }
+      /> 
+      <MoralisProvider
+    serverUrl={process.env.NEXT_PUBLIC_MORALIS_SERVER_URL }
+    appId={process.env.NEXT_PUBLIC_MORALIS_APP_ID }
+  > 
       <ThemeProvider theme={theme}>
 
       <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -59,8 +75,8 @@ const App = (props) => {
       </LocalizationProvider>
       </ThemeProvider>
 
-    </CacheProvider>
               </MoralisProvider>
+    </CacheProvider>
   );
 };
 

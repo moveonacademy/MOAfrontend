@@ -23,6 +23,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Autocomplete from '@mui/material/Autocomplete';
 import Head from 'next/head';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Helmet } from "react-helmet";
 
 import { useCallback,  useState,useEffect } from 'react';
 import Alert from '@mui/material/Alert';
@@ -762,6 +763,7 @@ const [change, setChange] = useState(false);
            Estudiantes
         </title>
       </Head>
+     
       <Box
         component="main"
         sx={{
@@ -1119,6 +1121,7 @@ const [change, setChange] = useState(false);
     </div>
            </Stack>
         </Container>
+        
       </Box>
     </>
   );
