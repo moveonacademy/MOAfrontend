@@ -140,6 +140,7 @@ const {Moralis}=useMoralis()
       for(let i=0;i<object4.length;i++){
 
         if(object4[i].attributes.programs){
+          console.log("supportEmail "+JSON.stringify(object4[i].attributes.programs))
 
       for(let j=0;j<object4[i].attributes.programs.length;j++){
         const query = new Moralis.Query("Programs");
@@ -147,7 +148,6 @@ const {Moralis}=useMoralis()
 
         query.equalTo("uid",object4[i].attributes.programs[j].value)
         const object = await query.first();
-        console.log("object4[i].attributes.programs "+object.attributes.programName)
 
 if(object){
   courses=[...courses,{
@@ -162,7 +162,6 @@ if(object){
 
 }
       }
-      console.log("supportEmail3 "+JSON.stringify(courses))
       setRowsCourse([...courses])
    
   
