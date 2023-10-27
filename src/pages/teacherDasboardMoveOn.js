@@ -138,25 +138,23 @@ const {Moralis}=useMoralis()
 
 
       for(let i=0;i<object4.length;i++){
-        console.log("object2 "+JSON.stringify(object4[i]))
 
         if(object4[i].attributes.programs){
-          
+
       for(let j=0;j<object4[i].attributes.programs.length;j++){
         const query = new Moralis.Query("Programs");
         query.limit(1000)
-        console.log("object4[i].attributes.programs[j].value "+JSON.stringify(object4[i].attributes.programs[j].value))
 
         query.equalTo("uid",object4[i].attributes.programs[j].value)
-        const object = await query.find();
-        console.log("object2 "+JSON.stringify(object4[i].attributes.programs[j].value))
+        const object = await query.first();
+        console.log("object4[i].attributes.programs "+object.attributes.programName)
 
-if(object[j]){
+if(object){
   courses=[...courses,{
-    id:object[j].attributes.uid,
-    programName:object[j].attributes.programName,
-    programDescription:object[j].attributes.programDescription,   
-    programLevel:object[j].attributes.programLevel,
+    id:object.attributes.uid,
+    programName:object.attributes.programName,
+    programDescription:object.attributes.programDescription,   
+    programLevel:object.attributes.programLevel,
    }]
 }
             
