@@ -107,7 +107,8 @@ const handleChange = useCallback(
       <MessageList>
       {history.map((message, index) => (
         
-        <div> <Message
+        <div 
+        key={index}> <Message
                 key={index}
                 name="userResponse"
 
