@@ -39,18 +39,6 @@ const App = (props) => {
         />
       
       </Head>
-      <Script
-        src="https://cdn.voiceflow.com/widget/bundle.mjs"
-        strategy="lazyOnload"
-        onLoad={() =>
-
-          window.voiceflow.chat.load({
-            verify: { projectID: '653a78d8978fad000708e03e' },
-            url: 'https://general-runtime.voiceflow.com',
-            versionID: 'production'
-          })
-        }
-      /> 
       <MoralisProvider
     serverUrl={process.env.NEXT_PUBLIC_MORALIS_SERVER_URL }
     appId={process.env.NEXT_PUBLIC_MORALIS_APP_ID }
@@ -76,6 +64,19 @@ const App = (props) => {
       </ThemeProvider>
 
               </MoralisProvider>
+              
+      <Script
+        src="https://cdn.voiceflow.com/widget/bundle.mjs"
+        strategy="lazyOnload"
+        onLoad={() =>
+
+          window.voiceflow.chat.load({
+            verify: { projectID: '653a78d8978fad000708e03e' },
+            url: 'https://general-runtime.voiceflow.com',
+            versionID: 'production'
+          })
+        }
+      />  
     </CacheProvider>
   );
 };

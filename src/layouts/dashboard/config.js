@@ -190,6 +190,15 @@ export const itemsAdmin = [
         <UserPlusIcon />
       </SvgIcon>
     )
+  },
+  {
+    title: 'Chatbot',
+    path: '/chatbot',
+    icon: (
+      <SvgIcon fontSize="small">
+        <UserPlusIcon />
+      </SvgIcon>
+    )
   }
 ];
 
