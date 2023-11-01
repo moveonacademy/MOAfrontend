@@ -66,7 +66,6 @@ for await (const part of stream) {
         }
 
 }
-console.log(mess)
 
 setHistory([...newHistory, {role:"assistant",content:mess}])
 
@@ -76,7 +75,6 @@ const [values, setValues] = useState({
   userResponse:"",
 });
 async function handleChat(){
-  console.log('test '+values.userResponse)
   
   let newHistory = [...history, { role: "assistant", content: values.userResponse}];
    const stream = await openai.chat.completions.create({
