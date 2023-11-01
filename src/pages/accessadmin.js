@@ -244,7 +244,6 @@ useEffect(()=>{
 
           let res=await query.first()
           setStateID(event.id)
-          console.log(event.row)
       setValues({typeOfUser:event.row.typeOfUser,email:event.row.email,sedeName:event.row.sedeName,city:event.row.city,sedeName:res.attributes.sedeName})  
 
     },
@@ -253,7 +252,6 @@ useEffect(()=>{
   
   const handleDelete = useCallback(
     (event) => {
-      console.log(event)
   
   setRowsToDelete(event)
     },
