@@ -64,7 +64,7 @@ const App = (props) => {
       </ThemeProvider>
 
               </MoralisProvider>
-              
+   {/*            
       <Script
         src="https://cdn.voiceflow.com/widget/bundle.mjs"
         strategy="lazyOnload"
@@ -76,7 +76,7 @@ const App = (props) => {
             versionID: 'production'
           })
         }
-      />  
+      />   */}
     </CacheProvider>
   );
 };

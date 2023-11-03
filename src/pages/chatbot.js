@@ -21,10 +21,13 @@
 /* eslint-disable no-inline-comments */
 /* eslint-disable no-inline-comments */
 import {   useEffect, useCallback,useState} from 'react';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import MicIcon from '@mui/icons-material/Mic';
+import Button from '@mui/material/Button';
+import VolumeMuteIcon from '@mui/icons-material/VolumeMute';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { Box, CardActions,CardContent,Button,TextField, Container, Stack, Typography, Unstable_Grid2 as Grid } from '@mui/material';
+import SettingsVoiceIcon from '@mui/icons-material/SettingsVoice';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
   MainContainer,
   ChatContainer,
@@ -33,14 +36,33 @@ import {
   MessageInput,
 } from "@chatscope/chat-ui-kit-react";
 import Speech from 'react-text-to-speech';
-
+import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import MicNoneIcon from '@mui/icons-material/MicNone';
 import OpenAI from 'openai';
-const openai = new OpenAI({ apiKey:"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", dangerouslyAllowBrowser: true })
+import { Scrollbar } from 'src/components/scrollbar';
+const openai = new OpenAI({ apiKey:"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", dangerouslyAllowBrowser: true })
 
 const Chatbot = () => {
-  const startBtn = <button className='my-start-btn'>Start Speech</button>
-  const pauseBtn = <button className='my-pause-btn'>Pause Speech</button>
-  const stopBtn = <button className='my-stop-btn'>Stop Speech</button>
+  const [isLoading2,setLoading2]=useState(false)
+
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+
+  
+  async function handleSpeaker(){
+    setLoading2(true)
+  }
+  async function handleStopSpeaker(){
+    setLoading2(false)
+
+  }
+  const startBtn = !isLoading2?<VolumeMuteIcon onClick={handleSpeaker}/>:null
+  const pauseBtn = isLoading2?<VolumeUpIcon onClick={handleStopSpeaker}/>:null
+  const stopBtn =  null
   const [history, setHistory] = useState([
     {
       role: "assistant",
@@ -48,9 +70,6 @@ const Chatbot = () => {
     },
   ]);
   
-useEffect(()=>{
-  // chatgpt()
-},[])
  async function chatgpt() { 
   let newHistory = [...history, { role: "assistant", content: `       `}];
    const stream = await openai.chat.completions.create({
@@ -95,20 +114,61 @@ console.log(mess)
 setHistory([...newHistory, {role:"assistant",content:mess}])
 
 }
+
+const [isLoading,setLoading]=useState(false)
+
+async function handleStart(){
+  SpeechRecognition.startListening()
+  setLoading(true)
+
+
+}
+async function handleStop(){
+  SpeechRecognition.stopListening()
+  setLoading(false)
+
+  let newHistory = [...history, { role: "assistant", content: transcript}];
+   const stream = await openai.chat.completions.create({
+  model: 'gpt-3.5-turbo',
+  messages: newHistory,
+  stream: true,
+});
+let mess=""
+for await (const part of stream) {
+        if(part.choices[0]?.delta?.content){
+          mess= mess+part.choices[0]?.delta?.content
+
+        }
+
+
+}
+console.log(mess)
+
+setHistory([...newHistory, {role:"assistant",content:mess}])
+
+}
 const handleChange = useCallback(
   async (event) => {
    setValues((prevState) => ({
      ...prevState,
      ["userResponse"]: event
    }))});
-  return (<div style={{ position: "relative", height: "100%" }}>
-  <MainContainer>
+  return (<div style={{ position: "relative", height: "90%" }}>
+   
+
+   <Button   variant="contained">{ isLoading?    <MicNoneIcon  onClick={handleStop}/>    
+ :<MicIcon   onClick={handleStart} />}</Button>
+
+  <MainContainer style={{marginTop:20}}>
     <ChatContainer>
+    
       <MessageList>
+      
       {history.map((message, index) => (
         
         <div 
-        key={index}> <Message
+        key={index}>
+           <Message
                 key={index}
                 name="userResponse"
 
@@ -128,8 +188,11 @@ const handleChange = useCallback(
               onError={() => console.error('Browser not supported!')}
           /></div>
             ))}
+            
       </MessageList>
-      <MessageInput onSend={handleChat} onChange={handleChange} placeholder="Type message here" />
+     
+      <MessageInput   onSend={handleChat} onChange={handleChange} placeholder="Type message here" />
+     
     </ChatContainer>
   </MainContainer>
 </div>
