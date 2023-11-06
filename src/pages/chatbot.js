@@ -40,6 +40,7 @@ import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import MicNoneIcon from '@mui/icons-material/MicNone';
 import OpenAI from 'openai';
 import { Scrollbar } from 'src/components/scrollbar';
+import {  useMoralis } from 'react-moralis';
 
 const Chatbot = () => {
   const [isLoading2,setLoading2]=useState(false)
@@ -72,6 +73,8 @@ const Chatbot = () => {
  async function chatgpt() { 
 return 
 }
+
+const {Moralis}=useMoralis()
 const [values, setValues] = useState({
   userResponse:"",
 });
