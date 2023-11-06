@@ -40,7 +40,7 @@ import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import MicNoneIcon from '@mui/icons-material/MicNone';
 import OpenAI from 'openai';
 import { Scrollbar } from 'src/components/scrollbar';
-const openai = new OpenAI({ apiKey:"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", dangerouslyAllowBrowser: true })
+const openai = new OpenAI({ apiKey:process.env.NEXT_PUBLIC_OPEN_IA})
 
 const Chatbot = () => {
   const [isLoading2,setLoading2]=useState(false)
