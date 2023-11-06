@@ -40,7 +40,7 @@ import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import MicNoneIcon from '@mui/icons-material/MicNone';
 import OpenAI from 'openai';
 import { Scrollbar } from 'src/components/scrollbar';
-const openai = new OpenAI({ apiKey:process.env.NEXT_PUBLIC_OPEN_IA})
+const openai = new OpenAI({ apiKey:process.env.NEXT_PUBLIC_OPEN_IA, dangerouslyAllowBrowser: true })
 
 const Chatbot = () => {
   const [isLoading2,setLoading2]=useState(false)
@@ -109,6 +109,7 @@ for await (const part of stream) {
         }
 
 }
+console.log(mess)
 
 setHistory([...newHistory, {role:"assistant",content:mess}])
 
