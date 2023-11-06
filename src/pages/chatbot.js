@@ -109,7 +109,6 @@ for await (const part of stream) {
         }
 
 }
-console.log(mess)
 
 setHistory([...newHistory, {role:"assistant",content:mess}])
 
