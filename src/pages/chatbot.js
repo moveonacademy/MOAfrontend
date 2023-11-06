@@ -40,7 +40,6 @@ import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import MicNoneIcon from '@mui/icons-material/MicNone';
 import OpenAI from 'openai';
 import { Scrollbar } from 'src/components/scrollbar';
-const openai = new OpenAI({ apiKey:process.env.NEXT_PUBLIC_OPEN_IA, dangerouslyAllowBrowser: true })
 
 const Chatbot = () => {
   const [isLoading2,setLoading2]=useState(false)
@@ -71,47 +70,19 @@ const Chatbot = () => {
   ]);
   
  async function chatgpt() { 
-  let newHistory = [...history, { role: "assistant", content: `       `}];
-   const stream = await openai.chat.completions.create({
-  model: 'gpt-3.5-turbo',
-  messages: newHistory,
-  stream: true,
-});
-let mess=""
-for await (const part of stream) {
-        if(part.choices[0]?.delta?.content){
-          mess= mess+part.choices[0]?.delta?.content
-
-        }
-
-}
-
-setHistory([...newHistory, {role:"assistant",content:mess}])
-
 return 
 }
 const [values, setValues] = useState({
   userResponse:"",
 });
 async function handleChat(){
-  
-  let newHistory = [...history, { role: "assistant", content: values.userResponse}];
-   const stream = await openai.chat.completions.create({
-  model: 'gpt-3.5-turbo',
-  messages: newHistory,
-  stream: true,
-});
-let mess=""
-for await (const part of stream) {
-        if(part.choices[0]?.delta?.content){
-          mess= mess+part.choices[0]?.delta?.content
-
-        }
-
-}
-console.log(mess)
-
-setHistory([...newHistory, {role:"assistant",content:mess}])
+  let res=await Moralis.Cloud.run(
+    "chatgpt",
+    { history:history, userResponse:values.userResponse}
+  );
+ 
+console.log(JSON.stringify(res))
+setHistory([...history, {role:"user",content:res}])
 
 }
 
@@ -126,25 +97,14 @@ async function handleStart(){
 async function handleStop(){
   SpeechRecognition.stopListening()
   setLoading(false)
+  let res=await Moralis.Cloud.run(
+    "chatgpt",
+    { history:history, userResponse:transcript}
+  );
+  
+  console.log(JSON.stringify(res))
 
-  let newHistory = [...history, { role: "assistant", content: transcript}];
-   const stream = await openai.chat.completions.create({
-  model: 'gpt-3.5-turbo',
-  messages: newHistory,
-  stream: true,
-});
-let mess=""
-for await (const part of stream) {
-        if(part.choices[0]?.delta?.content){
-          mess= mess+part.choices[0]?.delta?.content
-
-        }
-
-
-}
-console.log(mess)
-
-setHistory([...newHistory, {role:"assistant",content:mess}])
+setHistory([...history, {role:"user",content:res}])
 
 }
 const handleChange = useCallback(
