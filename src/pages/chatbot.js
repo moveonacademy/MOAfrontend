@@ -79,13 +79,15 @@ const [values, setValues] = useState({
   userResponse:"",
 });
 async function handleChat(){
+  let newHistory = [...history, { role: "user", content: values.userResponse}];
+
   let res=await Moralis.Cloud.run(
     "chatgpt",
-    { history:history, userResponse:values.userResponse}
+    { history:newHistory, userResponse:values.userResponse}
   );
  
 console.log(JSON.stringify(res))
-setHistory([...history, {role:"user",content:res}])
+setHistory([...newHistory, {role:"assistant",content:res}])
 
 }
 
@@ -100,16 +102,17 @@ async function handleStart(){
 async function handleStop(){
   SpeechRecognition.stopListening()
   setLoading(false)
-  setHistory([...history, {role:"user",content:transcript}])
+  console.log(transcript)
+  let newHistory = [...history, { role: "user", content: transcript}];
 
   let res=await Moralis.Cloud.run(
     "chatgpt",
-    { history:history, userResponse:transcript}
+    { history:newHistory, userResponse:transcript}
   );
   
   console.log(JSON.stringify(res))
 
-setHistory([...history, {role:"system",content:res}])
+setHistory([...newHistory, {role:"assistant",content:res}])
 
 }
 const handleChange = useCallback(
@@ -138,7 +141,8 @@ const handleChange = useCallback(
                 name="userResponse"
 
                 model={{
-                  message: message.content,
+                  sentTime: "just now",
+                  message: message.role+": "+message.content,
                   sender: message.role,
                 }}
               /><Speech 
@@ -146,6 +150,7 @@ const handleChange = useCallback(
               pitch={1.5}
               rate={1}
               volume={1}
+              r
               startBtn={startBtn}
               pauseBtn={pauseBtn}
               stopBtn={stopBtn}
