@@ -100,6 +100,8 @@ async function handleStart(){
 async function handleStop(){
   SpeechRecognition.stopListening()
   setLoading(false)
+  setHistory([...history, {role:"user",content:transcript}])
+
   let res=await Moralis.Cloud.run(
     "chatgpt",
     { history:history, userResponse:transcript}
@@ -107,7 +109,7 @@ async function handleStop(){
   
   console.log(JSON.stringify(res))
 
-setHistory([...history, {role:"user",content:res}])
+setHistory([...history, {role:"system",content:res}])
 
 }
 const handleChange = useCallback(
