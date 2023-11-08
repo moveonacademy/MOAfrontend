@@ -167,8 +167,8 @@ const handleChange = useCallback(
       <MessageInput style={ {flexGrow: 1,
           borderTop: 0,
           flexShrink: "initial"}}  onSend={handleChat} onChange={handleChange} placeholder="Type message here" />
-      <Button  onClick={isLoading?handleStop:handleStart} variant="contained">{ isLoading?    <MicNoneIcon  />    
- :<MicIcon    />}</Button>
+      <Button  onClick={isLoading?handleStop:handleStart} variant="contained">{ isLoading?    <MicIcon/>    
+ :<MicNoneIcon/>}</Button>
      </div>
    
     </ChatContainer>
