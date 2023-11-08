@@ -124,8 +124,6 @@ const handleChange = useCallback(
   return (<div style={{ position: "relative", height: "90%" }}>
    
 
-   <Button   variant="contained">{ isLoading?    <MicNoneIcon  onClick={handleStop}/>    
- :<MicIcon   onClick={handleStart} />}</Button>
 
   <MainContainer style={{marginTop:20}}>
     <ChatContainer>
@@ -160,9 +158,19 @@ const handleChange = useCallback(
             ))}
             
       </MessageList>
-     
-      <MessageInput   onSend={handleChat} onChange={handleChange} placeholder="Type message here" />
-     
+      <div as={MessageInput} style={{
+        display: "flex",
+        flexDirection: "row",
+        flex:1,
+        marginBottom:0,
+      }}>
+      <MessageInput style={ {flexGrow: 1,
+          borderTop: 0,
+          flexShrink: "initial"}}  onSend={handleChat} onChange={handleChange} placeholder="Type message here" />
+      <Button  onClick={isLoading?handleStop:handleStart} variant="contained">{ isLoading?    <MicNoneIcon  />    
+ :<MicIcon    />}</Button>
+     </div>
+   
     </ChatContainer>
   </MainContainer>
 </div>
