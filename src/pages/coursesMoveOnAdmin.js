@@ -115,6 +115,7 @@ setPrograms(prom)
           courseCity:object[i].attributes.courseCity,   
           courseLevel:object[i].attributes.courseLevel,
           courseLenguage:object[i].attributes.courseLenguage,
+          teacherEmail:object[i].attributes.teacherEmail,
          }]
       }
       
@@ -607,6 +608,8 @@ const [programs, setPrograms] = useState([...fixedOptions]);
     { field: 'courseLevel', headerName: 'courseLevel', width: 200 },
 
     { field: 'courseLenguage', headerName: 'courseLenguage', width: 200 },
+    { field: 'teacherEmail', headerName: 'teacherEmail', width: 200 },
+
   ];
   var [rowsDate,setRowsDate]=useState([]) 
    var [rowsUnidad,]=useState([])
