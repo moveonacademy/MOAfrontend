@@ -17,21 +17,7 @@ const Chatbot = () => {
   const [isLoading2, setLoading2] = useState(false);
   const [transcript, setTranscript] = useState("");
   const recorderControls = useAudioRecorder()
-  const addAudioElement = async (blob) => {
-    const url = URL.createObjectURL(blob);
-    
-    const audio = document.createElement("audio");
-    audio.src = url;
-    audio.controls = true;
-
-    let res= await Moralis.Cloud.run(
-      "chatgptVoiceToText",
-      { audioUrl:url}
-    );
-    console.log(JSON.stringify(res))
-
-    document.body.appendChild(audio);
-  };
+ 
 
   async function handleSpeaker() {
     setLoading2(true);
@@ -70,6 +56,23 @@ const Chatbot = () => {
   setHistory([...newHistory, {role:"assistant",content:res}])
   
   }
+   const addAudioElement = async (blob) => {
+    try {
+      const formData = new FormData();
+      formData.append("audioBlob", blob);
+
+      let res = await Moralis.Cloud.run(
+        "chatgptVoiceToText",
+        {},
+        { formData }
+      );
+      console.log(JSON.stringify(res));
+      
+      // Usar la respuesta en el estado o hacer lo que sea necesario
+    } catch (error) {
+      console.error(error);
+    }
+  };
   async function handleChatVoice() {
 
     // Integración con la API de OpenAI para transcribir audio
