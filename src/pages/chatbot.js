@@ -3,20 +3,15 @@ import MicIcon from '@mui/icons-material/Mic';
 import Button from '@mui/material/Button';
 import VolumeMuteIcon from '@mui/icons-material/VolumeMute';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import SettingsVoiceIcon from '@mui/icons-material/SettingsVoice';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput } from "@chatscope/chat-ui-kit-react";
 import Speech from 'react-text-to-speech';
-import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import MicNoneIcon from '@mui/icons-material/MicNone';
-import { Scrollbar } from 'src/components/scrollbar';
 import { useMoralis } from 'react-moralis';
-import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
 import { useWhisper } from '@chengsokdara/use-whisper'
 
 const Chatbot = () => {
   const [isLoading2, setLoading2] = useState(false);
-  const recorderControls = useAudioRecorder()
   const {
     recording,
     speaking,
@@ -92,18 +87,7 @@ const Chatbot = () => {
     setLoading(false);
     console.log(transcript);
     stopRecording()
-    /* 
-    let newHistory = [...history, { role: "user", content: transcript }];
-
-    let res = await Moralis.Cloud.run(
-      "chatgpt",
-      { history: newHistory, userResponse: transcript }
-    );
-
-    console.log(JSON.stringify(res));
-
-    setHistory([...newHistory, { role: "assistant", content: res }]);
-  */ }
+     }
 
   const handleChange = useCallback(
     async (event) => {
