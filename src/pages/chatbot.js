@@ -85,7 +85,6 @@ const Chatbot = () => {
 
   async function handleStop() {
     setLoading(false);
-    console.log(transcript);
     stopRecording()
      }
 
