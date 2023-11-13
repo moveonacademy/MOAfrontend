@@ -12,12 +12,36 @@ import MicNoneIcon from '@mui/icons-material/MicNone';
 import { Scrollbar } from 'src/components/scrollbar';
 import { useMoralis } from 'react-moralis';
 import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
+import { useWhisper } from '@chengsokdara/use-whisper'
 
 const Chatbot = () => {
   const [isLoading2, setLoading2] = useState(false);
-  const [transcript, setTranscript] = useState("");
   const recorderControls = useAudioRecorder()
- 
+  const {
+    recording,
+    speaking,
+    transcribing,
+    transcript,
+    pauseRecording,
+    startRecording,
+    stopRecording,
+  } = useWhisper({
+    apiKey: "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", // YOUR_OPEN_AI_TOKEN
+  })
+  const addAudioElement = async (blob) => {
+    const url = URL.createObjectURL(blob);
+    
+    const audio = document.createElement("audio");
+    audio.src = url;
+    audio.controls = true;
+    let res= await Moralis.Cloud.run(
+      "chatgptVoiceToText",
+      { audioBlob:"https://bafkreiha3mmjqrknll4rbwfmshjpj63vkctx43sohfz55w3e25v2zkw7i4.ipfs.nftstorage.link/"}
+    );
+    console.log(JSON.stringify(res))
+
+    document.body.appendChild(audio);
+  };
 
   async function handleSpeaker() {
     setLoading2(true);
@@ -56,41 +80,19 @@ const Chatbot = () => {
   setHistory([...newHistory, {role:"assistant",content:res}])
   
   }
-   const addAudioElement = async (blob) => {
-    try {
-      const formData = new FormData();
-      formData.append("audioBlob", blob);
-
-      let res = await Moralis.Cloud.run(
-        "chatgptVoiceToText",
-        {},
-        { formData }
-      );
-      console.log(JSON.stringify(res));
-      
-      // Usar la respuesta en el estado o hacer lo que sea necesario
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  async function handleChatVoice() {
-
-    // Integración con la API de OpenAI para transcribir audio
-    // Asegúrate de reemplazar 'YOUR_OPENAI_API_KEY' con tu clave de API real
-   
-
-    setHistory([...newHistory, { role: "assistant", content: transcriptionResult }]);
-  }
-
   const [isLoading, setLoading] = useState(false);
 
   async function handleStart() {
     setLoading(true);
+    startRecording()
+    setValues({userResponse:""})
   }
 
   async function handleStop() {
     setLoading(false);
     console.log(transcript);
+    stopRecording()
+    /* 
     let newHistory = [...history, { role: "user", content: transcript }];
 
     let res = await Moralis.Cloud.run(
@@ -101,7 +103,7 @@ const Chatbot = () => {
     console.log(JSON.stringify(res));
 
     setHistory([...newHistory, { role: "assistant", content: res }]);
-  }
+  */ }
 
   const handleChange = useCallback(
     async (event) => {
@@ -110,9 +112,19 @@ const Chatbot = () => {
         ["userResponse"]: event
       }));
     });
+useEffect(()=>{
 
+  if(transcript.text){
+    setValues((prevState) => ({
+      ...prevState,
+      ["userResponse"]:transcript.text
+    }));
+  }
+}
+,[transcript.text])
   return (
     <div style={{ position: "relative", height: "90%" }}>
+       
       <MainContainer style={{ marginTop: 20 }}>
        <ChatContainer>
           <MessageList>
@@ -151,11 +163,11 @@ const Chatbot = () => {
               flexGrow: 1,
               borderTop: 0,
               flexShrink: "initial"
-            }} onSend={handleChat} onChange={handleChange} placeholder="Type message here" />
-          <AudioRecorder 
-        onRecordingComplete={(blob) => addAudioElement(blob)}
-        recorderControls={recorderControls}
-      />
+            }}
+
+            sendDisabled={false} onSend={handleChat} value={values.userResponse} onChange={handleChange} placeholder="Type message here" />
+            <Button  onClick={isLoading?handleStop:handleStart} variant="contained">{ isLoading?    <MicIcon/>    
+ :<MicNoneIcon/>}</Button>
           </div>
         </ChatContainer>
       </MainContainer>
